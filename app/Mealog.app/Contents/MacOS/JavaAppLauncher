@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# スクリプト配置フォルダ
+MacOSFolder=`dirname $0`
+
+# アプリフォルダ
+cd "${MacOSFolder}"/../../
+AppFolder=`pwd`
+
+# Javaフォルダ
+JavaFolder="${AppFolder}"/Contents/Java
+
+# info.plist ファイル
+InfoPlistFile="${AppFolder}"/Contents/Info.plist
+
+# アプリ名を取得
+CFBundleName=`/usr/libexec/PlistBuddy -c "print :CFBundleName" "${InfoPlistFile}"`
+
+# アプリアイコンを取得
+CFBundleIconFile=`/usr/libexec/PlistBuddy -c "print :CFBundleIconFile" "${InfoPlistFile}"`
+
+# 以下のコマンドでインストール済みのjavaのフォルダが取得できる
+if [ -x /usr/libexec/java_home ] && [ -d "`/usr/libexec/java_home 2>/dev/null`" ];
+then
+  # javaコマンドまでのパスを設定
+  Java="`/usr/libexec/java_home 2>/dev/null`/bin/java"
+fi
+
+# javaコマンドが存在&実行可能かチェック
+if [ -f "${Java}" ] && [ -x "${Java}" ];
+then
+
+  # この環境変数を設定しないとDockにアプリアイコンが表示されない
+  export CFProcessPath="$0"
+
+  # アプリを起動
+  # jarが存在するフォルダへ移動してから起動
+  cd "${JavaFolder}"
+  exec "${Java}" -jar --enable-preview "${JavaFolder}"/Mealog.jar
+
+else
+  # AppleScriptでエラーダイアログを表示
+  osascript -e "tell application \"System Events\" to display dialog \"Launch Error\n\nJAVA command not found.\" with title \"${CFBundleName}\" buttons {\" OK \"} default button 1 with icon path to resource \"${CFBundleIconFile}\" in bundle (path to me)"
+  exit 1
+fi
