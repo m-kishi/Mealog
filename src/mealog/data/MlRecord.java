@@ -13,6 +13,9 @@ import mealog.common.MlUtility.UTL;
  */
 public class MlRecord {
 
+    /** マーク */
+    private String mark;
+
     /** 日付 */
     private LocalDate date;
 
@@ -43,6 +46,7 @@ public class MlRecord {
     /**
      * コンストラクタ
      * 
+     * @param mark  マーク
      * @param date  日付
      * @param zone  時間帯
      * @param name  名前
@@ -54,6 +58,7 @@ public class MlRecord {
      * @param note2 備考2
      */
     public MlRecord(
+            String mark,
             String date,
             String zone,
             String name,
@@ -64,6 +69,7 @@ public class MlRecord {
             String note1,
             String note2
     ) {
+        this.mark = mark;
         this.date = UTL.toLocalDate(date);
         this.zone = zone;
         this.name = name;
@@ -82,7 +88,8 @@ public class MlRecord {
      */
     public String toDBFileFormat() {
         return String.format(
-                "\"%s\",\"%s\",\"%s\",\"%.1f\",\"%s\",\"%.1f\",\"%.1f\",\"%s\",\"%s\"",
+                "\"%s\",\"%s\",\"%s\",\"%s\",\"%.1f\",\"%s\",\"%.1f\",\"%.1f\",\"%s\",\"%s\"",
+                mark,
                 UTL.toString(date),
                 zone,
                 name,
@@ -93,6 +100,15 @@ public class MlRecord {
                 note1,
                 note2
         );
+    }
+
+    /**
+     * getter(マーク)
+     * 
+     * @return
+     */
+    public String getMark() {
+        return mark;
     }
 
     /**

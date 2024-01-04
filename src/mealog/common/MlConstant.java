@@ -21,6 +21,16 @@ public class MlConstant {
     public static final String MASTER_FILE = "Master.db";
 
     /**
+     * マーク
+     */
+    public static class MARK {
+        /** ON */
+        public static final String ON = "1";
+        /** OFF */
+        public static final String OFF = "0";
+    }
+
+    /**
      * 列インデックス
      */
     public static class COL {

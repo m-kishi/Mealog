@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -53,6 +54,9 @@ public class MlFormRecord extends JFrame implements WindowListener {
 
     /** タイトル */
     private JLabel lblTitle;
+
+    /** マーク */
+    private JCheckBox chkMark;
 
     /** 日合計(kcal) */
     private JLabel lblKcalTotal;
@@ -166,6 +170,12 @@ public class MlFormRecord extends JFrame implements WindowListener {
         headerTitle.add(btnPrevD);
         headerTitle.add(Box.createRigidArea(new Dimension(5, 1)));
 
+        // マーク
+        chkMark = new JCheckBox();
+        chkMark.addActionListener(new CheckActionListener());
+        headerTitle.add(chkMark);
+        headerTitle.add(Box.createRigidArea(new Dimension(5, 1)));
+
         // タイトル
         lblTitle = new JLabel();
         lblTitle.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 18));
@@ -208,9 +218,9 @@ public class MlFormRecord extends JFrame implements WindowListener {
         JLabel lblTotal = new JLabel("日合計：");
         JLabel lblAverage = new JLabel("月平均：");
         lblKcalTotal = new JLabel("0.0 kcal");
-        lblSaltTotal = new JLabel("0.0 g");
+        lblSaltTotal = new JLabel(" / 0.0 g");
         lblKcalAverage = new JLabel("0.0 kcal");
-        lblSaltAverage = new JLabel("0.0 g");
+        lblSaltAverage = new JLabel(" / 0.0 g");
         lblTotal.setFont(lblFont);
         lblAverage.setFont(lblFont);
         lblKcalTotal.setFont(lblFont);
@@ -285,6 +295,9 @@ public class MlFormRecord extends JFrame implements WindowListener {
 
         // 画面の表示を更新
         model.updateInfo();
+
+        // 初期マークの設定
+        chkMark.setSelected(model.getMark());
     }
 
     /**
@@ -312,9 +325,9 @@ public class MlFormRecord extends JFrame implements WindowListener {
      */
     public void updateInfo(List<BigDecimal> infos) {
         lblKcalTotal.setText(UTL.format(infos.get(0)) + " kcal");
-        lblSaltTotal.setText(UTL.format(infos.get(1)) + " g");
+        lblSaltTotal.setText(" / " + UTL.format(infos.get(1)) + " g");
         lblKcalAverage.setText(UTL.format(infos.get(2)) + " kcal");
-        lblSaltAverage.setText(UTL.format(infos.get(3)) + " g");
+        lblSaltAverage.setText(" / " + UTL.format(infos.get(3)) + " g");
     }
 
     @Override
@@ -367,6 +380,21 @@ public class MlFormRecord extends JFrame implements WindowListener {
         public void actionPerformed(ActionEvent e) {
             action.get();
             lblTitle.setText(UTL.toTitle(model.getDate()));
+            chkMark.setSelected(model.getMark());
+        }
+    }
+
+    /**
+     * マークチェックボックスの切り替え
+     */
+    private class CheckActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JCheckBox source = (JCheckBox) e.getSource();
+
+            model.setMark(source.isSelected());
+            model.updateInfo();
         }
     }
 

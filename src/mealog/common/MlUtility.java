@@ -8,11 +8,16 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import mealog.data.MlRecord;
+import mealog.form.table.model.MlResultTableModel.TYPE;
 
 /**
  * ユーティリティ
@@ -94,12 +99,32 @@ public class MlUtility {
         /**
          * 平均を計算
          * 
-         * @param values 値リスト
+         * @param records 記録情報リスト
+         * @param type    実績区分
          * @return 平均
          */
-        public static BigDecimal getAverage(List<BigDecimal> values) {
-            BigDecimal count = new BigDecimal(values.size());
-            BigDecimal total = values.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        public static BigDecimal getAverage(List<MlRecord> records, TYPE type) {
+
+            // 日付ごとにグループ化
+            var groupByDate = records.stream().collect(Collectors.groupingBy(MlRecord::getDate));
+
+            // 件数
+            BigDecimal count = new BigDecimal(groupByDate.entrySet().size());
+
+            // 合計
+            BigDecimal total = BigDecimal.ZERO;
+            for (var entry : groupByDate.entrySet()) {
+                List<BigDecimal> values = new ArrayList<BigDecimal>();
+                if (type == TYPE.KCAL) {
+                    values = entry.getValue().stream().map(MlRecord::getKcal).collect(Collectors.toList());
+                }
+                if (type == TYPE.SALT) {
+                    values = entry.getValue().stream().map(MlRecord::getSalt).collect(Collectors.toList());
+                }
+                total = total.add(values.stream().reduce(BigDecimal.ZERO, BigDecimal::add));
+            }
+
+            // 平均
             return (count.equals(BigDecimal.ZERO)) ? BigDecimal.ZERO : total.divide(count, 1, RoundingMode.HALF_UP);
         }
     }

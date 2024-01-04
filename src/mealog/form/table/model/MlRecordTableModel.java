@@ -17,11 +17,13 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
+import mealog.common.MlConstant.MARK;
 import mealog.common.MlUtility.UTL;
 import mealog.data.MlMaster;
 import mealog.data.MlRecord;
 import mealog.form.MlFormRecord;
 import mealog.form.table.MlRecordTable.TABLE;
+import mealog.form.table.model.MlResultTableModel.TYPE;
 
 /**
  * 記録情報テーブルモデル
@@ -30,6 +32,9 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
 
     /** 親のフレーム */
     private MlFormRecord frame;
+
+    /** 現在のマーク */
+    private String mark;
 
     /** 現在の日付 */
     private LocalDate date;
@@ -96,6 +101,7 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
         } else {
             currentRecords.clear();
         }
+        mark = MARK.OFF;
         if (internalRecords.containsKey(date)) {
             for (MlRecord record : internalRecords.get(date)) {
                 currentRecords.add(new Object[] {
@@ -108,9 +114,30 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
                         record.getNote1(),
                         record.getNote2(),
                 });
+                if (mark.equals(MARK.OFF) && record.getMark().equals("1")) {
+                    mark = MARK.ON;
+                }
             }
         }
         fireTableDataChanged();
+    }
+
+    /**
+     * マークを取得
+     * 
+     * @return true:ON false:OFF
+     */
+    public boolean getMark() {
+        return mark.equals(MARK.ON);
+    }
+
+    /**
+     * マークを設定
+     * 
+     * @param checked チェック
+     */
+    public void setMark(boolean checked) {
+        mark = checked ? MARK.ON : MARK.OFF;
     }
 
     /**
@@ -253,6 +280,7 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
 
             records.add(
                     new MlRecord(
+                            mark,
                             UTL.toString(date),
                             record[0].toString(),
                             record[1].toString(),
@@ -288,6 +316,7 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
 
             records.add(
                     new MlRecord(
+                            mark,
                             UTL.toString(date),
                             record[0].toString(),
                             record[1].toString(),
@@ -302,22 +331,33 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
         }
 
         // 日合計
-        infos.add(records.stream().map(MlRecord::getKcal).reduce(BigDecimal.ZERO, BigDecimal::add));
-        infos.add(records.stream().map(MlRecord::getSalt).reduce(BigDecimal.ZERO, BigDecimal::add));
+        if (mark.equals(MARK.ON)) {
+            infos.add(records.stream().map(MlRecord::getKcal).reduce(BigDecimal.ZERO, BigDecimal::add));
+            infos.add(records.stream().map(MlRecord::getSalt).reduce(BigDecimal.ZERO, BigDecimal::add));
+        } else {
+            infos.add(BigDecimal.ZERO);
+            infos.add(BigDecimal.ZERO);
+        }
 
-        // 月平均
+        // 月間の記録情報を集める
         LocalDate str = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
         LocalDate end = str.plusMonths(1).minusDays(1);
         for (var entry : internalRecords.entrySet()) {
             LocalDate dt = entry.getKey();
+            if (dt.equals(date)) {
+                continue;
+            }
             if ((str.isBefore(dt) || str.isEqual(dt)) && (end.isAfter(dt) || end.isEqual(dt))) {
                 records.addAll(entry.getValue());
             }
         }
-        List<BigDecimal> kcalValues = records.stream().map(MlRecord::getKcal).collect(Collectors.toList());
-        List<BigDecimal> saltValues = records.stream().map(MlRecord::getSalt).collect(Collectors.toList());
-        infos.add(UTL.getAverage(kcalValues));
-        infos.add(UTL.getAverage(saltValues));
+
+        // 集計対象のみに絞り込み
+        records = records.stream().filter(x -> x.getMark().equals(MARK.ON)).collect(Collectors.toList());
+
+        // 月平均
+        infos.add(UTL.getAverage(records, TYPE.KCAL));
+        infos.add(UTL.getAverage(records, TYPE.SALT));
         frame.updateInfo(infos);
     }
 

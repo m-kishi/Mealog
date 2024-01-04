@@ -91,7 +91,8 @@ public class MlFileManager {
                     record.get(5),
                     record.get(6),
                     record.get(7),
-                    record.get(8)
+                    record.get(8),
+                    record.get(9)
             );
         });
     }
