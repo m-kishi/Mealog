@@ -217,21 +217,31 @@ public class MlFormRecord extends JFrame implements WindowListener {
         // 日計・月平均のラベル
         JLabel lblTotal = new JLabel("日合計：");
         JLabel lblAverage = new JLabel("月平均：");
+        JLabel lblSlash1 = new JLabel(" / ");
+        JLabel lblSlash2 = new JLabel(" / ");
         lblKcalTotal = new JLabel("0.0 kcal");
-        lblSaltTotal = new JLabel(" / 0.0 g");
+        lblSaltTotal = new JLabel("0.0 g");
         lblKcalAverage = new JLabel("0.0 kcal");
-        lblSaltAverage = new JLabel(" / 0.0 g");
+        lblSaltAverage = new JLabel("0.0 g");
+        lblKcalTotal.setHorizontalAlignment(JLabel.RIGHT);
+        lblSaltTotal.setHorizontalAlignment(JLabel.RIGHT);
+        lblKcalAverage.setHorizontalAlignment(JLabel.RIGHT);
+        lblSaltAverage.setHorizontalAlignment(JLabel.RIGHT);
         lblTotal.setFont(lblFont);
         lblAverage.setFont(lblFont);
+        lblSlash1.setFont(lblFont);
+        lblSlash2.setFont(lblFont);
         lblKcalTotal.setFont(lblFont);
         lblSaltTotal.setFont(lblFont);
         lblKcalAverage.setFont(lblFont);
         lblSaltAverage.setFont(lblFont);
         contentArea.add(lblTotal);
         contentArea.add(lblKcalTotal);
+        contentArea.add(lblSlash1);
         contentArea.add(lblSaltTotal);
         contentArea.add(lblAverage);
         contentArea.add(lblKcalAverage);
+        contentArea.add(lblSlash2);
         contentArea.add(lblSaltAverage);
 
         // 登録ボタン
@@ -258,14 +268,22 @@ public class MlFormRecord extends JFrame implements WindowListener {
         layout.putConstraint(SpringLayout.WEST, lblTotal, 10, SpringLayout.WEST, contentArea);
         layout.putConstraint(SpringLayout.NORTH, lblKcalTotal, 9, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.WEST, lblKcalTotal, 1, SpringLayout.EAST, lblTotal);
+        layout.putConstraint(SpringLayout.EAST, lblKcalTotal, -685, SpringLayout.EAST, contentArea);
+        layout.putConstraint(SpringLayout.NORTH, lblSlash1, 9, SpringLayout.NORTH, contentArea);
+        layout.putConstraint(SpringLayout.WEST, lblSlash1, 5, SpringLayout.EAST, lblKcalTotal);
         layout.putConstraint(SpringLayout.NORTH, lblSaltTotal, 9, SpringLayout.NORTH, contentArea);
-        layout.putConstraint(SpringLayout.WEST, lblSaltTotal, 5, SpringLayout.EAST, lblKcalTotal);
+        layout.putConstraint(SpringLayout.WEST, lblSaltTotal, 0, SpringLayout.EAST, lblSlash1);
+        layout.putConstraint(SpringLayout.EAST, lblSaltTotal, -595, SpringLayout.EAST, contentArea);
         layout.putConstraint(SpringLayout.NORTH, lblAverage, 10, SpringLayout.NORTH, contentArea);
-        layout.putConstraint(SpringLayout.WEST, lblAverage, 15, SpringLayout.EAST, lblSaltTotal);
+        layout.putConstraint(SpringLayout.WEST, lblAverage, 50, SpringLayout.EAST, lblSaltTotal);
         layout.putConstraint(SpringLayout.NORTH, lblKcalAverage, 9, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.WEST, lblKcalAverage, 1, SpringLayout.EAST, lblAverage);
+        layout.putConstraint(SpringLayout.EAST, lblKcalAverage, -365, SpringLayout.EAST, contentArea);
+        layout.putConstraint(SpringLayout.NORTH, lblSlash2, 9, SpringLayout.NORTH, contentArea);
+        layout.putConstraint(SpringLayout.WEST, lblSlash2, 5, SpringLayout.EAST, lblKcalAverage);
         layout.putConstraint(SpringLayout.NORTH, lblSaltAverage, 9, SpringLayout.NORTH, contentArea);
-        layout.putConstraint(SpringLayout.WEST, lblSaltAverage, 5, SpringLayout.EAST, lblKcalAverage);
+        layout.putConstraint(SpringLayout.WEST, lblSaltAverage, 0, SpringLayout.EAST, lblSlash2);
+        layout.putConstraint(SpringLayout.EAST, lblSaltAverage, -275, SpringLayout.EAST, contentArea);
         layout.putConstraint(SpringLayout.NORTH, btnAddRow, 10, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.EAST, btnAddRow, -10, SpringLayout.EAST, contentArea);
         layout.putConstraint(SpringLayout.NORTH, btnEntry, 10, SpringLayout.NORTH, contentArea);
@@ -325,9 +343,9 @@ public class MlFormRecord extends JFrame implements WindowListener {
      */
     public void updateInfo(List<BigDecimal> infos) {
         lblKcalTotal.setText(UTL.format(infos.get(0)) + " kcal");
-        lblSaltTotal.setText(" / " + UTL.format(infos.get(1)) + " g");
+        lblSaltTotal.setText(UTL.format(infos.get(1)) + " g");
         lblKcalAverage.setText(UTL.format(infos.get(2)) + " kcal");
-        lblSaltAverage.setText(" / " + UTL.format(infos.get(3)) + " g");
+        lblSaltAverage.setText(UTL.format(infos.get(3)) + " g");
     }
 
     @Override

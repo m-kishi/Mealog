@@ -82,7 +82,7 @@ public class MlUtility {
          * @return #,##0.0
          */
         public static String format(Object value) {
-            DecimalFormat df = new DecimalFormat("#,##0.0");
+            DecimalFormat df = new DecimalFormat("#,##0.00");
             return df.format(value);
         }
 
@@ -125,7 +125,7 @@ public class MlUtility {
             }
 
             // 平均
-            return (count.equals(BigDecimal.ZERO)) ? BigDecimal.ZERO : total.divide(count, 1, RoundingMode.HALF_UP);
+            return (count.equals(BigDecimal.ZERO)) ? BigDecimal.ZERO : total.divide(count, 2, RoundingMode.HALF_UP);
         }
     }
 

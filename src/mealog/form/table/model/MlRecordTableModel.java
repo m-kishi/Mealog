@@ -425,8 +425,8 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
             MlMaster master = masters.stream().filter(x -> x.getName().equals(name) && x.getUnit().equals(unit)).findFirst().orElse(null);
             if (master != null) {
                 BigDecimal mass = UTL.toBigDecimal(getValueAt(row, col).toString());
-                setValueAt(master.getKcal().multiply(mass).divide(master.getBase(), 1, RoundingMode.HALF_UP), row, TABLE.KCAL);
-                setValueAt(master.getSalt().multiply(mass).divide(master.getBase(), 1, RoundingMode.HALF_UP), row, TABLE.SALT);
+                setValueAt(master.getKcal().multiply(mass).divide(master.getBase(), 2, RoundingMode.HALF_UP), row, TABLE.KCAL);
+                setValueAt(master.getSalt().multiply(mass).divide(master.getBase(), 2, RoundingMode.HALF_UP), row, TABLE.SALT);
             }
         }
 

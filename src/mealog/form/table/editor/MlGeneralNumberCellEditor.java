@@ -88,6 +88,7 @@ public class MlGeneralNumberCellEditor extends DefaultCellEditor {
         // BigDecimalへ変換できるか確認
         if (!UTL.isEmpty(text)) {
             try {
+                text = text.replaceAll(",", "");
                 value = new BigDecimal(text);
             } catch (NumberFormatException ex) {
                 // エラーなら赤枠を表示して編集を完了させない

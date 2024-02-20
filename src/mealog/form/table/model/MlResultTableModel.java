@@ -82,7 +82,7 @@ public class MlResultTableModel extends AbstractTableModel {
             }
 
             // 年の平均を計算
-            result[COLUMNS.length - 1] = (count.equals(BigDecimal.ZERO)) ? BigDecimal.ZERO : total.divide(count, 1, RoundingMode.HALF_UP);
+            result[COLUMNS.length - 1] = (count.equals(BigDecimal.ZERO)) ? BigDecimal.ZERO : total.divide(count, 2, RoundingMode.HALF_UP);
 
             results.add(result);
         }

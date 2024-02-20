@@ -88,7 +88,7 @@ public class MlRecord {
      */
     public String toDBFileFormat() {
         return String.format(
-                "\"%s\",\"%s\",\"%s\",\"%s\",\"%.1f\",\"%s\",\"%.1f\",\"%.1f\",\"%s\",\"%s\"",
+                "\"%s\",\"%s\",\"%s\",\"%s\",\"%.2f\",\"%s\",\"%.2f\",\"%.2f\",\"%s\",\"%s\"",
                 mark,
                 UTL.toString(date),
                 zone,
