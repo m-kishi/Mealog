@@ -68,7 +68,11 @@ public class MlSubformImage extends JDialog {
             icon = new ImageIcon(filePath);
 
             // サイズ調整
-            image = icon.getImage().getScaledInstance(504, -1, Image.SCALE_SMOOTH);
+            if (icon.getIconWidth() > icon.getIconHeight()) {
+                image = icon.getImage().getScaledInstance(504, -1, Image.SCALE_SMOOTH);
+            } else {
+                image = icon.getImage().getScaledInstance(-1, 428, Image.SCALE_SMOOTH);
+            }
         }
 
         // 完了まで待機

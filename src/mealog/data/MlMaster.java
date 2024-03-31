@@ -48,11 +48,25 @@ public class MlMaster {
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
         this.salt = UTL.toBigDecimal(salt);
-        this.link = name + ".png";
-        Path path = Paths.get("images/" + this.link);
-        if (Files.notExists(path)) {
-            this.link = "";
+        this.link = decideExtention(name);
+    }
+
+    /**
+     * リンクの決定
+     * 
+     * @param name 名前
+     * @return 拡張子付きリンク
+     */
+    private String decideExtention(String name) {
+        String[] extensions = { ".png", ".jpg" };
+        for (String ext : extensions) {
+            String link = name + ext;
+            Path path = Paths.get("images/" + link);
+            if (Files.exists(path)) {
+                return link;
+            }
         }
+        return "";
     }
 
     /**
