@@ -148,7 +148,7 @@ public class MlFormRecord extends JFrame implements WindowListener {
         btnPrevY.setFont(btnFont);
         btnPrevY.setMargin(margin);
         btnPrevY.setPreferredSize(size);
-        btnPrevY.addActionListener(new ChangeDateActionListener(() -> model.loadNextYear()));
+        btnPrevY.addActionListener(new ChangeDateActionListener(() -> model.loadPrevYear()));
         headerTitle.add(btnPrevY);
         headerTitle.add(Box.createRigidArea(new Dimension(5, 1)));
 
