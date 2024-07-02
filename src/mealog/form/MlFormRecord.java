@@ -64,11 +64,17 @@ public class MlFormRecord extends JFrame implements WindowListener {
     /** 日合計(塩分) */
     private JLabel lblSaltTotal;
 
+    /** 日合計(脂質) */
+    private JLabel lblFatsTotal;
+
     /** 月平均(kcal) */
     private JLabel lblKcalAverage;
 
     /** 月平均(塩分) */
     private JLabel lblSaltAverage;
+
+    /** 月平均(脂質) */
+    private JLabel lblFatsAverage;
 
     /** テーブル */
     private MlRecordTable table;
@@ -93,7 +99,7 @@ public class MlFormRecord extends JFrame implements WindowListener {
 
         // フォーム
         setTitle("Mealog");
-        setSize(884, 446);
+        setSize(964, 446);
         setResizable(false);
         addWindowListener(this);
         setLocationRelativeTo(null);
@@ -219,22 +225,32 @@ public class MlFormRecord extends JFrame implements WindowListener {
         JLabel lblAverage = new JLabel("月平均：");
         JLabel lblSlash1 = new JLabel(" / ");
         JLabel lblSlash2 = new JLabel(" / ");
+        JLabel lblSlash3 = new JLabel(" / ");
+        JLabel lblSlash4 = new JLabel(" / ");
         lblKcalTotal = new JLabel("0.0 kcal");
         lblSaltTotal = new JLabel("0.0 g");
+        lblFatsTotal = new JLabel("0.0 g");
         lblKcalAverage = new JLabel("0.0 kcal");
         lblSaltAverage = new JLabel("0.0 g");
+        lblFatsAverage = new JLabel("0.0 g");
         lblKcalTotal.setHorizontalAlignment(JLabel.RIGHT);
         lblSaltTotal.setHorizontalAlignment(JLabel.RIGHT);
+        lblFatsTotal.setHorizontalAlignment(JLabel.RIGHT);
         lblKcalAverage.setHorizontalAlignment(JLabel.RIGHT);
         lblSaltAverage.setHorizontalAlignment(JLabel.RIGHT);
+        lblFatsAverage.setHorizontalAlignment(JLabel.RIGHT);
         lblTotal.setFont(lblFont);
         lblAverage.setFont(lblFont);
         lblSlash1.setFont(lblFont);
         lblSlash2.setFont(lblFont);
+        lblSlash3.setFont(lblFont);
+        lblSlash4.setFont(lblFont);
         lblKcalTotal.setFont(lblFont);
         lblSaltTotal.setFont(lblFont);
+        lblFatsTotal.setFont(lblFont);
         lblKcalAverage.setFont(lblFont);
         lblSaltAverage.setFont(lblFont);
+        lblFatsAverage.setFont(lblFont);
         contentArea.add(lblTotal);
         contentArea.add(lblKcalTotal);
         contentArea.add(lblSlash1);
@@ -243,6 +259,10 @@ public class MlFormRecord extends JFrame implements WindowListener {
         contentArea.add(lblKcalAverage);
         contentArea.add(lblSlash2);
         contentArea.add(lblSaltAverage);
+        contentArea.add(lblSlash3);
+        contentArea.add(lblFatsTotal);
+        contentArea.add(lblSlash4);
+        contentArea.add(lblFatsAverage);
 
         // 登録ボタン
         JButton btnEntry = new JButton("登録");
@@ -274,6 +294,11 @@ public class MlFormRecord extends JFrame implements WindowListener {
         layout.putConstraint(SpringLayout.NORTH, lblSaltTotal, 9, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.WEST, lblSaltTotal, 0, SpringLayout.EAST, lblSlash1);
         layout.putConstraint(SpringLayout.EAST, lblSaltTotal, -595, SpringLayout.EAST, contentArea);
+        layout.putConstraint(SpringLayout.WEST, lblSlash3, 0, SpringLayout.WEST, lblSlash1);
+        layout.putConstraint(SpringLayout.NORTH, lblSlash3, 5, SpringLayout.SOUTH, lblSlash1);
+        layout.putConstraint(SpringLayout.NORTH, lblFatsTotal, 2, SpringLayout.NORTH, lblSlash3);
+        layout.putConstraint(SpringLayout.WEST, lblFatsTotal, 0, SpringLayout.EAST, lblSlash3);
+        layout.putConstraint(SpringLayout.EAST, lblFatsTotal, 0, SpringLayout.EAST, lblSaltTotal);
         layout.putConstraint(SpringLayout.NORTH, lblAverage, 10, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.WEST, lblAverage, 50, SpringLayout.EAST, lblSaltTotal);
         layout.putConstraint(SpringLayout.NORTH, lblKcalAverage, 9, SpringLayout.NORTH, contentArea);
@@ -284,11 +309,16 @@ public class MlFormRecord extends JFrame implements WindowListener {
         layout.putConstraint(SpringLayout.NORTH, lblSaltAverage, 9, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.WEST, lblSaltAverage, 0, SpringLayout.EAST, lblSlash2);
         layout.putConstraint(SpringLayout.EAST, lblSaltAverage, -275, SpringLayout.EAST, contentArea);
+        layout.putConstraint(SpringLayout.WEST, lblSlash4, 0, SpringLayout.WEST, lblSlash2);
+        layout.putConstraint(SpringLayout.NORTH, lblSlash4, 5, SpringLayout.SOUTH, lblSlash2);
+        layout.putConstraint(SpringLayout.NORTH, lblFatsAverage, 2, SpringLayout.NORTH, lblSlash4);
+        layout.putConstraint(SpringLayout.WEST, lblFatsAverage, 0, SpringLayout.EAST, lblSlash4);
+        layout.putConstraint(SpringLayout.EAST, lblFatsAverage, 0, SpringLayout.EAST, lblSaltAverage);
         layout.putConstraint(SpringLayout.NORTH, btnAddRow, 10, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.EAST, btnAddRow, -10, SpringLayout.EAST, contentArea);
         layout.putConstraint(SpringLayout.NORTH, btnEntry, 10, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.EAST, btnEntry, -10, SpringLayout.WEST, btnAddRow);
-        layout.putConstraint(SpringLayout.NORTH, scrollPane, 10, SpringLayout.SOUTH, btnEntry);
+        layout.putConstraint(SpringLayout.NORTH, scrollPane, 10, SpringLayout.SOUTH, lblSlash3);
         layout.putConstraint(SpringLayout.WEST, scrollPane, 5, SpringLayout.WEST, contentArea);
         layout.putConstraint(SpringLayout.EAST, scrollPane, -5, SpringLayout.EAST, contentArea);
         layout.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.SOUTH, contentArea);
@@ -339,13 +369,15 @@ public class MlFormRecord extends JFrame implements WindowListener {
     /**
      * 日合計と月平均の表示を更新
      * 
-     * @param infos [0:日合計(kcal) 1:日合計(塩分) 2:月平均(kcal) 3:月平均(塩分)]
+     * @param infos [0:日合計(kcal) 1:日合計(塩分) 2:日合計(脂質) 3:月平均(kcal) 4:月平均(塩分) 5:月平均(脂質)]
      */
     public void updateInfo(List<BigDecimal> infos) {
         lblKcalTotal.setText(UTL.format(infos.get(0)) + " kcal");
         lblSaltTotal.setText(UTL.format(infos.get(1)) + " g");
-        lblKcalAverage.setText(UTL.format(infos.get(2)) + " kcal");
-        lblSaltAverage.setText(UTL.format(infos.get(3)) + " g");
+        lblFatsTotal.setText(UTL.format(infos.get(2)) + " g");
+        lblKcalAverage.setText(UTL.format(infos.get(3)) + " kcal");
+        lblSaltAverage.setText(UTL.format(infos.get(4)) + " g");
+        lblFatsAverage.setText(UTL.format(infos.get(5)) + " g");
     }
 
     @Override

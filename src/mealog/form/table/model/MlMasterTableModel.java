@@ -28,6 +28,7 @@ public class MlMasterTableModel extends AbstractTableModel {
             "単位",
             "kcal",
             "塩分",
+            "脂質",
             "画像",
     };
 
@@ -59,6 +60,7 @@ public class MlMasterTableModel extends AbstractTableModel {
                     master.getUnit(),
                     master.getKcal(),
                     master.getSalt(),
+                    master.getFats(),
                     master.getLink(),
             });
         }
@@ -70,7 +72,7 @@ public class MlMasterTableModel extends AbstractTableModel {
      */
     public void addRow() {
         for (int i = 0; i < 10; i++) {
-            masters.add(new Object[] { "", BigDecimal.ZERO, "", BigDecimal.ZERO, BigDecimal.ZERO, "" });
+            masters.add(new Object[] { "", BigDecimal.ZERO, "", BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, "" });
         }
         fireTableRowsInserted(0, masters.size() - 1);
     }
@@ -95,7 +97,8 @@ public class MlMasterTableModel extends AbstractTableModel {
                             master[1].toString(),
                             master[2].toString(),
                             master[3].toString(),
-                            master[4].toString()
+                            master[4].toString(),
+                            master[5].toString()
                     )
             );
         }

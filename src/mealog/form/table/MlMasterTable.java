@@ -45,6 +45,7 @@ public class MlMasterTable extends JTable {
         TableColumn colUnit = getColumnModel().getColumn(COL.MASTER.UNIT);
         TableColumn colKcal = getColumnModel().getColumn(COL.MASTER.KCAL);
         TableColumn colSalt = getColumnModel().getColumn(COL.MASTER.SALT);
+        TableColumn colFats = getColumnModel().getColumn(COL.MASTER.FATS);
         TableColumn colLink = getColumnModel().getColumn(COL.MASTER.LINK);
 
         TableCellRenderer rendererName = new MlGeneralStringCellRenderer();
@@ -52,6 +53,7 @@ public class MlMasterTable extends JTable {
         TableCellRenderer rendererUnit = new MlGeneralStringCellRenderer(JLabel.CENTER);
         TableCellRenderer rendererKcal = new MlGeneralNumberCellRenderer();
         TableCellRenderer rendererSalt = new MlGeneralNumberCellRenderer();
+        TableCellRenderer rendererFats = new MlGeneralNumberCellRenderer();
         TableCellRenderer rendererLink = new MlImageLinkCellRenderer(component);
 
         colName.setCellRenderer(rendererName);
@@ -59,6 +61,7 @@ public class MlMasterTable extends JTable {
         colUnit.setCellRenderer(rendererUnit);
         colKcal.setCellRenderer(rendererKcal);
         colSalt.setCellRenderer(rendererSalt);
+        colFats.setCellRenderer(rendererFats);
         colLink.setCellRenderer(rendererLink);
 
         colName.setCellEditor(new MlGeneralStringCellEditor());
@@ -66,6 +69,7 @@ public class MlMasterTable extends JTable {
         colUnit.setCellEditor(new MlGeneralStringCellEditor());
         colKcal.setCellEditor(new MlGeneralNumberCellEditor());
         colSalt.setCellEditor(new MlGeneralNumberCellEditor());
+        colFats.setCellEditor(new MlGeneralNumberCellEditor());
 
         // 列幅設定
         columns.getColumn(COL.MASTER.NAME).setPreferredWidth(200);
@@ -73,6 +77,7 @@ public class MlMasterTable extends JTable {
         columns.getColumn(COL.MASTER.UNIT).setPreferredWidth(60);
         columns.getColumn(COL.MASTER.KCAL).setPreferredWidth(80);
         columns.getColumn(COL.MASTER.SALT).setPreferredWidth(80);
+        columns.getColumn(COL.MASTER.FATS).setPreferredWidth(80);
         columns.getColumn(COL.MASTER.LINK).setPreferredWidth(200);
 
         // マウスイベントの登録

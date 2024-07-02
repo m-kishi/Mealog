@@ -51,10 +51,12 @@ public class MlConstant {
             public static final int KCAL = 5;
             /** 塩分 */
             public static final int SALT = 6;
+            /** 脂質 */
+            public static final int FATS = 7;
             /** 備考1 */
-            public static final int NOTE1 = 7;
+            public static final int NOTE1 = 8;
             /** 備考2 */
-            public static final int NOTE2 = 8;
+            public static final int NOTE2 = 9;
         }
 
         /** 実績情報テーブル */
@@ -101,8 +103,10 @@ public class MlConstant {
             public static final int KCAL = 3;
             /** 塩分 */
             public static final int SALT = 4;
+            /** 脂質 */
+            public static final int FATS = 5;
             /** リンク */
-            public static final int LINK = 5;
+            public static final int LINK = 6;
         }
     }
 }

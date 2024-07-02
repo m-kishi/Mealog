@@ -37,6 +37,9 @@ public class MlRecord {
     /** 塩分 */
     private BigDecimal salt;
 
+    /** 脂質 */
+    private BigDecimal fats;
+
     /** 備考1 */
     private String note1;
 
@@ -45,6 +48,7 @@ public class MlRecord {
 
     /**
      * コンストラクタ
+     * v1.3.0 より前のバージョンで利用
      * 
      * @param mark  マーク
      * @param date  日付
@@ -77,6 +81,49 @@ public class MlRecord {
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
         this.salt = UTL.toBigDecimal(salt);
+        this.fats = BigDecimal.ZERO;
+        this.note1 = note1;
+        this.note2 = note2;
+    }
+
+    /**
+     * コンストラクタ
+     * v1.3.0 以降のバージョンで利用
+     * 
+     * @param mark  マーク
+     * @param date  日付
+     * @param zone  時間帯
+     * @param name  名前
+     * @param mass  数量
+     * @param unit  単位
+     * @param kcal  kcal
+     * @param salt  塩分
+     * @param fats  脂質
+     * @param note1 備考1
+     * @param note2 備考2
+     */
+    public MlRecord(
+            String mark,
+            String date,
+            String zone,
+            String name,
+            String mass,
+            String unit,
+            String kcal,
+            String salt,
+            String fats,
+            String note1,
+            String note2
+    ) {
+        this.mark = mark;
+        this.date = UTL.toLocalDate(date);
+        this.zone = zone;
+        this.name = name;
+        this.mass = UTL.toBigDecimal(mass);
+        this.unit = unit;
+        this.kcal = UTL.toBigDecimal(kcal);
+        this.salt = UTL.toBigDecimal(salt);
+        this.fats = UTL.toBigDecimal(fats);
         this.note1 = note1;
         this.note2 = note2;
     }
@@ -88,7 +135,7 @@ public class MlRecord {
      */
     public String toDBFileFormat() {
         return String.format(
-                "\"%s\",\"%s\",\"%s\",\"%s\",\"%.2f\",\"%s\",\"%.2f\",\"%.2f\",\"%s\",\"%s\"",
+                "\"%s\",\"%s\",\"%s\",\"%s\",\"%.2f\",\"%s\",\"%.2f\",\"%.2f\",\"%.2f\",\"%s\",\"%s\"",
                 mark,
                 UTL.toString(date),
                 zone,
@@ -97,6 +144,7 @@ public class MlRecord {
                 unit,
                 kcal,
                 salt,
+                fats,
                 note1,
                 note2
         );
@@ -172,6 +220,15 @@ public class MlRecord {
      */
     public BigDecimal getSalt() {
         return salt;
+    }
+
+    /**
+     * getter(脂質)
+     * 
+     * @return 脂質
+     */
+    public BigDecimal getFats() {
+        return fats;
     }
 
     /**

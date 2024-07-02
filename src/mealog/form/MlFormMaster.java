@@ -62,7 +62,7 @@ public class MlFormMaster extends JFrame implements WindowListener {
 
         // フォーム
         setTitle("マスタ");
-        setSize(712, 700);
+        setSize(792, 700);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

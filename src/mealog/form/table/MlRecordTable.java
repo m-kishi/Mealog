@@ -36,8 +36,9 @@ public class MlRecordTable extends JTable {
         public static final int UNIT = 3;
         public static final int KCAL = 4;
         public static final int SALT = 5;
-        public static final int NOTE1 = 6;
-        public static final int NOTE2 = 7;
+        public static final int FATS = 6;
+        public static final int NOTE1 = 7;
+        public static final int NOTE2 = 8;
     }
 
     /**
@@ -59,6 +60,7 @@ public class MlRecordTable extends JTable {
         TableColumn colUnit = columns.getColumn(TABLE.UNIT);
         TableColumn colKcal = columns.getColumn(TABLE.KCAL);
         TableColumn colSalt = columns.getColumn(TABLE.SALT);
+        TableColumn colFats = columns.getColumn(TABLE.FATS);
         TableColumn colNote1 = columns.getColumn(TABLE.NOTE1);
         TableColumn colNote2 = columns.getColumn(TABLE.NOTE2);
 
@@ -68,6 +70,7 @@ public class MlRecordTable extends JTable {
         colUnit.setCellRenderer(new MlGeneralStringCellRenderer(JLabel.CENTER));
         colKcal.setCellRenderer(new MlGeneralNumberCellRenderer());
         colSalt.setCellRenderer(new MlGeneralNumberCellRenderer());
+        colFats.setCellRenderer(new MlGeneralNumberCellRenderer());
         colNote1.setCellRenderer(new MlGeneralStringCellRenderer());
         colNote2.setCellRenderer(new MlGeneralStringCellRenderer());
 
@@ -77,6 +80,7 @@ public class MlRecordTable extends JTable {
         colUnit.setCellEditor(new MlGeneralStringCellEditor());
         colKcal.setCellEditor(new MlGeneralNumberCellEditor());
         colSalt.setCellEditor(new MlGeneralNumberCellEditor());
+        colFats.setCellEditor(new MlGeneralNumberCellEditor());
         colNote1.setCellEditor(new MlGeneralStringCellEditor());
         colNote2.setCellEditor(new MlGeneralStringCellEditor());
 
@@ -87,6 +91,7 @@ public class MlRecordTable extends JTable {
         columns.getColumn(TABLE.UNIT).setPreferredWidth(60);
         columns.getColumn(TABLE.KCAL).setPreferredWidth(80);
         columns.getColumn(TABLE.SALT).setPreferredWidth(80);
+        columns.getColumn(TABLE.FATS).setPreferredWidth(80);
         columns.getColumn(TABLE.NOTE1).setPreferredWidth(150);
         columns.getColumn(TABLE.NOTE2).setPreferredWidth(150);
 
@@ -102,10 +107,10 @@ public class MlRecordTable extends JTable {
     @Override
     public boolean editCellAt(int row, int column, EventObject e) {
         boolean result = super.editCellAt(row, column, e);
-        if (column != TABLE.MASS && column != TABLE.KCAL && column != TABLE.SALT) {
+        if (column != TABLE.MASS && column != TABLE.KCAL && column != TABLE.SALT && column != TABLE.FATS) {
             return result;
         }
-        // 数量・kcal・塩分は編集開始時に全選択する
+        // 数量・kcal・塩分・脂質は編集開始時に全選択する
         if (result) {
             if (e instanceof KeyEvent) {
                 KeyEvent event = (KeyEvent) e;

@@ -121,6 +121,9 @@ public class MlUtility {
                 if (type == TYPE.SALT) {
                     values = entry.getValue().stream().map(MlRecord::getSalt).collect(Collectors.toList());
                 }
+                if (type == TYPE.FATS) {
+                    values = entry.getValue().stream().map(MlRecord::getFats).collect(Collectors.toList());
+                }
                 total = total.add(values.stream().reduce(BigDecimal.ZERO, BigDecimal::add));
             }
 
