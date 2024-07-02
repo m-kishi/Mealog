@@ -82,18 +82,34 @@ public class MlFileManager {
      */
     public static List<MlRecord> loadRecord(String file) throws MlException {
         return load(file, (record) -> {
-            return new MlRecord(
-                    record.get(0),
-                    record.get(1),
-                    record.get(2),
-                    record.get(3),
-                    record.get(4),
-                    record.get(5),
-                    record.get(6),
-                    record.get(7),
-                    record.get(8),
-                    record.get(9)
-            );
+            if (record.size() < 11) {
+                return new MlRecord(
+                        record.get(0),
+                        record.get(1),
+                        record.get(2),
+                        record.get(3),
+                        record.get(4),
+                        record.get(5),
+                        record.get(6),
+                        record.get(7),
+                        record.get(8),
+                        record.get(9)
+                );
+            } else {
+                return new MlRecord(
+                        record.get(0),
+                        record.get(1),
+                        record.get(2),
+                        record.get(3),
+                        record.get(4),
+                        record.get(5),
+                        record.get(6),
+                        record.get(7),
+                        record.get(8),
+                        record.get(9),
+                        record.get(10)
+                );
+            }
         });
     }
 
@@ -106,13 +122,24 @@ public class MlFileManager {
      */
     public static List<MlMaster> loadMaster(String file) throws MlException {
         return load(file, (record) -> {
-            return new MlMaster(
-                    record.get(0),
-                    record.get(1),
-                    record.get(2),
-                    record.get(3),
-                    record.get(4)
-            );
+            if (record.size() < 6) {
+                return new MlMaster(
+                        record.get(0),
+                        record.get(1),
+                        record.get(2),
+                        record.get(3),
+                        record.get(4)
+                );
+            } else {
+                return new MlMaster(
+                        record.get(0),
+                        record.get(1),
+                        record.get(2),
+                        record.get(3),
+                        record.get(4),
+                        record.get(5)
+                );
+            }
         });
     }
 

@@ -36,6 +36,9 @@ public class MlFormResult extends JDialog implements WindowListener {
     /** スクロール領域 */
     private JScrollPane scrollPaneSalt;
 
+    /** スクロール領域 */
+    private JScrollPane scrollPaneFats;
+
     /**
      * コンストラクタ
      * 
@@ -70,31 +73,40 @@ public class MlFormResult extends JDialog implements WindowListener {
         // テーブルモデル
         MlResultTableModel modelKcal = new MlResultTableModel(records, TYPE.KCAL);
         MlResultTableModel modelSalt = new MlResultTableModel(records, TYPE.SALT);
+        MlResultTableModel modelFats = new MlResultTableModel(records, TYPE.FATS);
         MlResultTable tableKcal = new MlResultTable(modelKcal);
         MlResultTable tableSalt = new MlResultTable(modelSalt);
+        MlResultTable tableFats = new MlResultTable(modelFats);
 
         // テーブル設定
         Font font = new Font(Font.DIALOG_INPUT, Font.BOLD, 12);
         tableKcal.setFont(font);
         tableSalt.setFont(font);
+        tableFats.setFont(font);
         tableKcal.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableSalt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tableFats.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // スクロール領域
         scrollPaneKcal = new JScrollPane(tableKcal);
         scrollPaneSalt = new JScrollPane(tableSalt);
+        scrollPaneFats = new JScrollPane(tableFats);
         scrollPaneKcal.setBorder(new CompoundBorder(scrollPaneKcal.getBorder(), new EmptyBorder(0, 0, 0, 0)));
         scrollPaneSalt.setBorder(new CompoundBorder(scrollPaneSalt.getBorder(), new EmptyBorder(0, 0, 0, 0)));
+        scrollPaneFats.setBorder(new CompoundBorder(scrollPaneFats.getBorder(), new EmptyBorder(0, 0, 0, 0)));
 
         // 余白設定
         tableKcal.setLayout(new BorderLayout());
         tableSalt.setLayout(new BorderLayout());
+        tableFats.setLayout(new BorderLayout());
         tableKcal.setBorder(new CompoundBorder(tableKcal.getBorder(), new EmptyBorder(5, 5, 5, 5)));
         tableSalt.setBorder(new CompoundBorder(tableSalt.getBorder(), new EmptyBorder(5, 5, 5, 5)));
+        tableFats.setBorder(new CompoundBorder(tableFats.getBorder(), new EmptyBorder(5, 5, 5, 5)));
 
         // タブに追加
         tab.addTab("kcal", scrollPaneKcal);
         tab.addTab("塩分", scrollPaneSalt);
+        tab.addTab("脂質", scrollPaneFats);
 
         getContentPane().add(tab, BorderLayout.CENTER);
     }
@@ -107,8 +119,10 @@ public class MlFormResult extends JDialog implements WindowListener {
         // スクロールバーを最下層へ
         JScrollBar scrollBarKcal = scrollPaneKcal.getVerticalScrollBar();
         JScrollBar scrollBarSalt = scrollPaneSalt.getVerticalScrollBar();
+        JScrollBar scrollBarFats = scrollPaneFats.getVerticalScrollBar();
         scrollBarKcal.setValue(scrollBarKcal.getMaximum());
         scrollBarSalt.setValue(scrollBarSalt.getMaximum());
+        scrollBarFats.setValue(scrollBarFats.getMaximum());
     }
 
     @Override
