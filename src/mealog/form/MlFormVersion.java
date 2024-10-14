@@ -28,7 +28,7 @@ public class MlFormVersion extends JDialog {
     public static final String TITLE = "Mealogのバージョン情報";
 
     /** バージョン */
-    public static final String VERSION = "v1.3.0";
+    public static final String VERSION = "v1.3.1";
 
     /** コピーライト */
     public static final String COPYRIGHT = "© 2023 https://github.com/m-kishi";

@@ -77,8 +77,10 @@ public class MlResultTableModel extends AbstractTableModel {
             for (int month = 1; month <= 12; month++) {
                 if (groupByMonth.containsKey(month)) {
                     result[month] = UTL.getAverage(groupByMonth.get(month), type);
-                    count = count.add(BigDecimal.ONE);
-                    total = total.add((BigDecimal) result[month]);
+                    if (((BigDecimal) result[month]).compareTo(BigDecimal.ZERO) != 0) {
+                        count = count.add(BigDecimal.ONE);
+                        total = total.add((BigDecimal) result[month]);
+                    }
                 }
             }
 

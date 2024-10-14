@@ -285,7 +285,7 @@ public class MlFormRecord extends JFrame implements WindowListener {
 
         // レイアウトの配置設定
         layout.putConstraint(SpringLayout.NORTH, lblTotal, 10, SpringLayout.NORTH, contentArea);
-        layout.putConstraint(SpringLayout.WEST, lblTotal, 10, SpringLayout.WEST, contentArea);
+        layout.putConstraint(SpringLayout.WEST, lblTotal, 88, SpringLayout.WEST, contentArea);
         layout.putConstraint(SpringLayout.NORTH, lblKcalTotal, 9, SpringLayout.NORTH, contentArea);
         layout.putConstraint(SpringLayout.WEST, lblKcalTotal, 1, SpringLayout.EAST, lblTotal);
         layout.putConstraint(SpringLayout.EAST, lblKcalTotal, -685, SpringLayout.EAST, contentArea);
