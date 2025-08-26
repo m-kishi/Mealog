@@ -27,11 +27,14 @@ public class MlMaster {
     /** kcal */
     private BigDecimal kcal;
 
-    /** 塩分 */
-    private BigDecimal salt;
+    /** タンパク質 */
+    private BigDecimal prtn;
 
     /** 脂質 */
     private BigDecimal fats;
+
+    /** 塩分 */
+    private BigDecimal salt;
 
     /** リンク */
     private String link;
@@ -51,14 +54,15 @@ public class MlMaster {
         this.base = UTL.toBigDecimal(base);
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
-        this.salt = UTL.toBigDecimal(salt);
+        this.prtn = BigDecimal.ZERO;
         this.fats = BigDecimal.ZERO;
+        this.salt = UTL.toBigDecimal(salt);
         this.link = decideExtention(name);
     }
 
     /**
      * コンストラクタ
-     * v1.3.0 以降のバージョンで利用
+     * v1.3.0 〜 1.3.1 で利用
      * 
      * @param name 名前
      * @param base 基準量
@@ -72,8 +76,32 @@ public class MlMaster {
         this.base = UTL.toBigDecimal(base);
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
-        this.salt = UTL.toBigDecimal(salt);
+        this.prtn = BigDecimal.ZERO;
         this.fats = UTL.toBigDecimal(fats);
+        this.salt = UTL.toBigDecimal(salt);
+        this.link = decideExtention(name);
+    }
+
+    /**
+     * コンストラクタ
+     * v1.4.0 以降のバージョンで利用
+     * 
+     * @param name 名前
+     * @param base 基準量
+     * @param unit 単位
+     * @param kcal kcal
+     * @param prtn タンパク質
+     * @param fats 脂質
+     * @param salt 塩分
+     */
+    public MlMaster(String name, String base, String unit, String kcal, String prtn, String fats, String salt) {
+        this.name = name;
+        this.base = UTL.toBigDecimal(base);
+        this.unit = unit;
+        this.kcal = UTL.toBigDecimal(kcal);
+        this.prtn = UTL.toBigDecimal(prtn);
+        this.fats = UTL.toBigDecimal(fats);
+        this.salt = UTL.toBigDecimal(salt);
         this.link = decideExtention(name);
     }
 
@@ -102,13 +130,14 @@ public class MlMaster {
      */
     public String toMasterFileFormat() {
         return String.format(
-                "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"",
+                "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"",
                 name,
                 UTL.format(base),
                 unit,
                 UTL.format(kcal),
-                UTL.format(salt),
-                UTL.format(fats)
+                UTL.format(prtn),
+                UTL.format(fats),
+                UTL.format(salt)
         );
     }
 
@@ -149,12 +178,12 @@ public class MlMaster {
     }
 
     /**
-     * getter(塩分)
+     * タンパク質
      * 
-     * @return 塩分
+     * @return タンパク質
      */
-    public BigDecimal getSalt() {
-        return salt;
+    public BigDecimal getPrtn() {
+        return prtn;
     }
 
     /**
@@ -164,6 +193,15 @@ public class MlMaster {
      */
     public BigDecimal getFats() {
         return fats;
+    }
+
+    /**
+     * getter(塩分)
+     * 
+     * @return 塩分
+     */
+    public BigDecimal getSalt() {
+        return salt;
     }
 
     /**

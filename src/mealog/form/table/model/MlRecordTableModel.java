@@ -52,10 +52,10 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
             "数量",
             "単位",
             "kcal",
-            "塩分",
+            "タンパク質",
             "脂質",
-            "備考1",
-            "備考2",
+            "塩分",
+            "備考",
     };
 
     /**
@@ -111,10 +111,10 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
                         record.getMass(),
                         record.getUnit(),
                         record.getKcal(),
-                        record.getSalt(),
+                        record.getPrtn(),
                         record.getFats(),
-                        record.getNote1(),
-                        record.getNote2(),
+                        record.getSalt(),
+                        record.getNote(),
                 });
                 if (mark.equals(MARK.OFF) && record.getMark().equals("1")) {
                     mark = MARK.ON;
@@ -156,7 +156,17 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
      */
     public void addRow() {
         for (int i = 0; i < 10; i++) {
-            currentRecords.add(new Object[] { "", "", BigDecimal.ZERO, "", BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, "", "" });
+            currentRecords.add(new Object[] {
+                    "",
+                    "",
+                    BigDecimal.ZERO,
+                    "",
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO,
+                    ""
+            });
         }
         fireTableRowsInserted(0, currentRecords.size() - 1);
     }
@@ -292,7 +302,8 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
                             record[5].toString(),
                             record[6].toString(),
                             record[7].toString(),
-                            record[8].toString()
+                            record[8].toString(),
+                            ""
                     )
             );
         }
@@ -329,7 +340,8 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
                             record[5].toString(),
                             record[6].toString(),
                             record[7].toString(),
-                            record[8].toString()
+                            record[8].toString(),
+                            ""
                     )
             );
         }
@@ -337,9 +349,11 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
         // 日合計
         if (mark.equals(MARK.ON)) {
             infos.add(records.stream().map(MlRecord::getKcal).reduce(BigDecimal.ZERO, BigDecimal::add));
-            infos.add(records.stream().map(MlRecord::getSalt).reduce(BigDecimal.ZERO, BigDecimal::add));
+            infos.add(records.stream().map(MlRecord::getPrtn).reduce(BigDecimal.ZERO, BigDecimal::add));
             infos.add(records.stream().map(MlRecord::getFats).reduce(BigDecimal.ZERO, BigDecimal::add));
+            infos.add(records.stream().map(MlRecord::getSalt).reduce(BigDecimal.ZERO, BigDecimal::add));
         } else {
+            infos.add(BigDecimal.ZERO);
             infos.add(BigDecimal.ZERO);
             infos.add(BigDecimal.ZERO);
             infos.add(BigDecimal.ZERO);
@@ -363,8 +377,9 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
 
         // 月平均
         infos.add(UTL.getAverage(records, TYPE.KCAL));
-        infos.add(UTL.getAverage(records, TYPE.SALT));
+        infos.add(UTL.getAverage(records, TYPE.PRTN));
         infos.add(UTL.getAverage(records, TYPE.FATS));
+        infos.add(UTL.getAverage(records, TYPE.SALT));
         frame.updateInfo(infos);
     }
 
@@ -421,7 +436,7 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
             }
         }
 
-        // 数量を入力したら基準量を元にkcalと塩分と脂質を計算
+        // 数量を入力したら基準量を元にkcalとタンパク質と脂質と塩分を計算
         if (col == TABLE.MASS) {
             String name = getValueAt(row, TABLE.NAME).toString();
             String unit = getValueAt(row, TABLE.UNIT).toString();
@@ -433,8 +448,9 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
             if (master != null) {
                 BigDecimal mass = UTL.toBigDecimal(getValueAt(row, col).toString());
                 setValueAt(master.getKcal().multiply(mass).divide(master.getBase(), 2, RoundingMode.HALF_UP), row, TABLE.KCAL);
-                setValueAt(master.getSalt().multiply(mass).divide(master.getBase(), 2, RoundingMode.HALF_UP), row, TABLE.SALT);
+                setValueAt(master.getPrtn().multiply(mass).divide(master.getBase(), 2, RoundingMode.HALF_UP), row, TABLE.PRTN);
                 setValueAt(master.getFats().multiply(mass).divide(master.getBase(), 2, RoundingMode.HALF_UP), row, TABLE.FATS);
+                setValueAt(master.getSalt().multiply(mass).divide(master.getBase(), 2, RoundingMode.HALF_UP), row, TABLE.SALT);
             }
         }
 

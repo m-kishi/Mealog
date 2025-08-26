@@ -95,7 +95,7 @@ public class MlFileManager {
                         record.get(8),
                         record.get(9)
                 );
-            } else {
+            } else if (record.size() == 11) {
                 return new MlRecord(
                         record.get(0),
                         record.get(1),
@@ -108,6 +108,21 @@ public class MlFileManager {
                         record.get(8),
                         record.get(9),
                         record.get(10)
+                );
+            } else {
+                return new MlRecord(
+                        record.get(1),
+                        record.get(2),
+                        record.get(3),
+                        record.get(4),
+                        record.get(5),
+                        record.get(6),
+                        record.get(7),
+                        record.get(8),
+                        record.get(9),
+                        record.get(10),
+                        record.get(11),
+                        ""
                 );
             }
         });
@@ -130,7 +145,7 @@ public class MlFileManager {
                         record.get(3),
                         record.get(4)
                 );
-            } else {
+            } else if (record.size() == 6) {
                 return new MlMaster(
                         record.get(0),
                         record.get(1),
@@ -138,6 +153,16 @@ public class MlFileManager {
                         record.get(3),
                         record.get(4),
                         record.get(5)
+                );
+            } else {
+                return new MlMaster(
+                        record.get(0),
+                        record.get(1),
+                        record.get(2),
+                        record.get(3),
+                        record.get(4),
+                        record.get(5),
+                        record.get(6)
                 );
             }
         });

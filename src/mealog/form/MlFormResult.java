@@ -34,10 +34,13 @@ public class MlFormResult extends JDialog implements WindowListener {
     private JScrollPane scrollPaneKcal;
 
     /** スクロール領域 */
-    private JScrollPane scrollPaneSalt;
+    private JScrollPane scrollPanePrtn;
 
     /** スクロール領域 */
     private JScrollPane scrollPaneFats;
+
+    /** スクロール領域 */
+    private JScrollPane scrollPaneSalt;
 
     /**
      * コンストラクタ
@@ -72,41 +75,50 @@ public class MlFormResult extends JDialog implements WindowListener {
 
         // テーブルモデル
         MlResultTableModel modelKcal = new MlResultTableModel(records, TYPE.KCAL);
-        MlResultTableModel modelSalt = new MlResultTableModel(records, TYPE.SALT);
+        MlResultTableModel modelPrtn = new MlResultTableModel(records, TYPE.PRTN);
         MlResultTableModel modelFats = new MlResultTableModel(records, TYPE.FATS);
+        MlResultTableModel modelSalt = new MlResultTableModel(records, TYPE.SALT);
         MlResultTable tableKcal = new MlResultTable(modelKcal);
-        MlResultTable tableSalt = new MlResultTable(modelSalt);
+        MlResultTable tablePrtn = new MlResultTable(modelPrtn);
         MlResultTable tableFats = new MlResultTable(modelFats);
+        MlResultTable tableSalt = new MlResultTable(modelSalt);
 
         // テーブル設定
         Font font = new Font(Font.DIALOG_INPUT, Font.BOLD, 12);
         tableKcal.setFont(font);
-        tableSalt.setFont(font);
+        tablePrtn.setFont(font);
         tableFats.setFont(font);
+        tableSalt.setFont(font);
         tableKcal.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        tableSalt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tablePrtn.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableFats.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tableSalt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // スクロール領域
         scrollPaneKcal = new JScrollPane(tableKcal);
-        scrollPaneSalt = new JScrollPane(tableSalt);
+        scrollPanePrtn = new JScrollPane(tablePrtn);
         scrollPaneFats = new JScrollPane(tableFats);
+        scrollPaneSalt = new JScrollPane(tableSalt);
         scrollPaneKcal.setBorder(new CompoundBorder(scrollPaneKcal.getBorder(), new EmptyBorder(0, 0, 0, 0)));
-        scrollPaneSalt.setBorder(new CompoundBorder(scrollPaneSalt.getBorder(), new EmptyBorder(0, 0, 0, 0)));
+        scrollPanePrtn.setBorder(new CompoundBorder(scrollPanePrtn.getBorder(), new EmptyBorder(0, 0, 0, 0)));
         scrollPaneFats.setBorder(new CompoundBorder(scrollPaneFats.getBorder(), new EmptyBorder(0, 0, 0, 0)));
+        scrollPaneSalt.setBorder(new CompoundBorder(scrollPaneSalt.getBorder(), new EmptyBorder(0, 0, 0, 0)));
 
         // 余白設定
         tableKcal.setLayout(new BorderLayout());
-        tableSalt.setLayout(new BorderLayout());
+        tablePrtn.setLayout(new BorderLayout());
         tableFats.setLayout(new BorderLayout());
+        tableSalt.setLayout(new BorderLayout());
         tableKcal.setBorder(new CompoundBorder(tableKcal.getBorder(), new EmptyBorder(5, 5, 5, 5)));
-        tableSalt.setBorder(new CompoundBorder(tableSalt.getBorder(), new EmptyBorder(5, 5, 5, 5)));
+        tablePrtn.setBorder(new CompoundBorder(tablePrtn.getBorder(), new EmptyBorder(5, 5, 5, 5)));
         tableFats.setBorder(new CompoundBorder(tableFats.getBorder(), new EmptyBorder(5, 5, 5, 5)));
+        tableSalt.setBorder(new CompoundBorder(tableSalt.getBorder(), new EmptyBorder(5, 5, 5, 5)));
 
         // タブに追加
         tab.addTab("kcal", scrollPaneKcal);
-        tab.addTab("塩分", scrollPaneSalt);
+        tab.addTab("タンパク質", scrollPanePrtn);
         tab.addTab("脂質", scrollPaneFats);
+        tab.addTab("塩分", scrollPaneSalt);
 
         getContentPane().add(tab, BorderLayout.CENTER);
     }
@@ -118,11 +130,13 @@ public class MlFormResult extends JDialog implements WindowListener {
 
         // スクロールバーを最下層へ
         JScrollBar scrollBarKcal = scrollPaneKcal.getVerticalScrollBar();
-        JScrollBar scrollBarSalt = scrollPaneSalt.getVerticalScrollBar();
+        JScrollBar scrollBarPrtn = scrollPanePrtn.getVerticalScrollBar();
         JScrollBar scrollBarFats = scrollPaneFats.getVerticalScrollBar();
+        JScrollBar scrollBarSalt = scrollPaneSalt.getVerticalScrollBar();
         scrollBarKcal.setValue(scrollBarKcal.getMaximum());
-        scrollBarSalt.setValue(scrollBarSalt.getMaximum());
+        scrollBarPrtn.setValue(scrollBarPrtn.getMaximum());
         scrollBarFats.setValue(scrollBarFats.getMaximum());
+        scrollBarSalt.setValue(scrollBarSalt.getMaximum());
     }
 
     @Override

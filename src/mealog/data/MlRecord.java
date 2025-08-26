@@ -34,17 +34,17 @@ public class MlRecord {
     /** kcal */
     private BigDecimal kcal;
 
-    /** 塩分 */
-    private BigDecimal salt;
+    /** タンパク質 */
+    private BigDecimal prtn;
 
     /** 脂質 */
     private BigDecimal fats;
 
-    /** 備考1 */
-    private String note1;
+    /** 塩分 */
+    private BigDecimal salt;
 
-    /** 備考2 */
-    private String note2;
+    /** 備考 */
+    private String note;
 
     /**
      * コンストラクタ
@@ -80,15 +80,15 @@ public class MlRecord {
         this.mass = UTL.toBigDecimal(mass);
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
-        this.salt = UTL.toBigDecimal(salt);
+        this.prtn = BigDecimal.ZERO;
         this.fats = BigDecimal.ZERO;
-        this.note1 = note1;
-        this.note2 = note2;
+        this.salt = UTL.toBigDecimal(salt);
+        this.note = note1 + (UTL.isEmpty(note2) ? "" : " " + note2);
     }
 
     /**
      * コンストラクタ
-     * v1.3.0 以降のバージョンで利用
+     * v1.3.0 〜 1.3.1 で利用
      * 
      * @param mark  マーク
      * @param date  日付
@@ -122,10 +122,53 @@ public class MlRecord {
         this.mass = UTL.toBigDecimal(mass);
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
-        this.salt = UTL.toBigDecimal(salt);
+        this.prtn = BigDecimal.ZERO;
         this.fats = UTL.toBigDecimal(fats);
-        this.note1 = note1;
-        this.note2 = note2;
+        this.salt = UTL.toBigDecimal(salt);
+        this.note = note1 + (UTL.isEmpty(note2) ? "" : " " + note2);
+    }
+
+    /**
+     * コンストラクタ
+     * v1.4.0 以降のバージョンで利用
+     * 
+     * @param mark マーク
+     * @param date 日付
+     * @param zone 時間帯
+     * @param name 名前
+     * @param mass 数量
+     * @param unit 単位
+     * @param kcal kcal
+     * @param prtn タンパク質
+     * @param fats 脂質
+     * @param salt 塩分
+     * @param note 備考
+     */
+    public MlRecord(
+            String mark,
+            String date,
+            String zone,
+            String name,
+            String mass,
+            String unit,
+            String kcal,
+            String prtn,
+            String fats,
+            String salt,
+            String note,
+            String dummy
+    ) {
+        this.mark = mark;
+        this.date = UTL.toLocalDate(date);
+        this.zone = zone;
+        this.name = name;
+        this.mass = UTL.toBigDecimal(mass);
+        this.unit = unit;
+        this.kcal = UTL.toBigDecimal(kcal);
+        this.prtn = UTL.toBigDecimal(prtn);
+        this.fats = UTL.toBigDecimal(fats);
+        this.salt = UTL.toBigDecimal(salt);
+        this.note = note;
     }
 
     /**
@@ -135,7 +178,7 @@ public class MlRecord {
      */
     public String toDBFileFormat() {
         return String.format(
-                "\"%s\",\"%s\",\"%s\",\"%s\",\"%.2f\",\"%s\",\"%.2f\",\"%.2f\",\"%.2f\",\"%s\",\"%s\"",
+                "\"1.4.0\",\"%s\",\"%s\",\"%s\",\"%s\",\"%.2f\",\"%s\",\"%.2f\",\"%.2f\",\"%.2f\",\"%.2f\",\"%s\"",
                 mark,
                 UTL.toString(date),
                 zone,
@@ -143,11 +186,10 @@ public class MlRecord {
                 mass,
                 unit,
                 kcal,
-                salt,
+                prtn,
                 fats,
-                note1,
-                note2
-        );
+                salt,
+                note);
     }
 
     /**
@@ -214,12 +256,12 @@ public class MlRecord {
     }
 
     /**
-     * getter(塩分)
+     * getter(タンパク質)
      * 
-     * @return 塩分
+     * @return タンパク質
      */
-    public BigDecimal getSalt() {
-        return salt;
+    public BigDecimal getPrtn() {
+        return prtn;
     }
 
     /**
@@ -232,20 +274,20 @@ public class MlRecord {
     }
 
     /**
-     * getter(備考1)
+     * getter(塩分)
      * 
-     * @return 備考1
+     * @return 塩分
      */
-    public String getNote1() {
-        return note1;
+    public BigDecimal getSalt() {
+        return salt;
     }
 
     /**
-     * getter(備考2)
+     * getter(備考)
      * 
-     * @return 備考2
+     * @return 備考
      */
-    public String getNote2() {
-        return note2;
+    public String getNote() {
+        return note;
     }
 }

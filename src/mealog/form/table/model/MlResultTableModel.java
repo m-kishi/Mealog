@@ -23,8 +23,9 @@ public class MlResultTableModel extends AbstractTableModel {
     /** 実績区分 */
     public enum TYPE {
         KCAL,
-        SALT,
+        PRTN,
         FATS,
+        SALT,
     };
 
     /** 内部データ */

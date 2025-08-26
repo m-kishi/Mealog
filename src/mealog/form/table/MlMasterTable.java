@@ -44,40 +44,45 @@ public class MlMasterTable extends JTable {
         TableColumn colBase = getColumnModel().getColumn(COL.MASTER.BASE);
         TableColumn colUnit = getColumnModel().getColumn(COL.MASTER.UNIT);
         TableColumn colKcal = getColumnModel().getColumn(COL.MASTER.KCAL);
-        TableColumn colSalt = getColumnModel().getColumn(COL.MASTER.SALT);
+        TableColumn colPrtn = getColumnModel().getColumn(COL.MASTER.PRTN);
         TableColumn colFats = getColumnModel().getColumn(COL.MASTER.FATS);
+        TableColumn colSalt = getColumnModel().getColumn(COL.MASTER.SALT);
         TableColumn colLink = getColumnModel().getColumn(COL.MASTER.LINK);
 
         TableCellRenderer rendererName = new MlGeneralStringCellRenderer();
         TableCellRenderer rendererBase = new MlGeneralNumberCellRenderer();
         TableCellRenderer rendererUnit = new MlGeneralStringCellRenderer(JLabel.CENTER);
         TableCellRenderer rendererKcal = new MlGeneralNumberCellRenderer();
-        TableCellRenderer rendererSalt = new MlGeneralNumberCellRenderer();
+        TableCellRenderer rendererPrtn = new MlGeneralNumberCellRenderer();
         TableCellRenderer rendererFats = new MlGeneralNumberCellRenderer();
+        TableCellRenderer rendererSalt = new MlGeneralNumberCellRenderer();
         TableCellRenderer rendererLink = new MlImageLinkCellRenderer(component);
 
         colName.setCellRenderer(rendererName);
         colBase.setCellRenderer(rendererBase);
         colUnit.setCellRenderer(rendererUnit);
         colKcal.setCellRenderer(rendererKcal);
-        colSalt.setCellRenderer(rendererSalt);
+        colFats.setCellRenderer(rendererPrtn);
         colFats.setCellRenderer(rendererFats);
+        colSalt.setCellRenderer(rendererSalt);
         colLink.setCellRenderer(rendererLink);
 
         colName.setCellEditor(new MlGeneralStringCellEditor());
         colBase.setCellEditor(new MlGeneralNumberCellEditor());
         colUnit.setCellEditor(new MlGeneralStringCellEditor());
         colKcal.setCellEditor(new MlGeneralNumberCellEditor());
-        colSalt.setCellEditor(new MlGeneralNumberCellEditor());
+        colPrtn.setCellEditor(new MlGeneralNumberCellEditor());
         colFats.setCellEditor(new MlGeneralNumberCellEditor());
+        colSalt.setCellEditor(new MlGeneralNumberCellEditor());
 
         // 列幅設定
         columns.getColumn(COL.MASTER.NAME).setPreferredWidth(200);
         columns.getColumn(COL.MASTER.BASE).setPreferredWidth(60);
         columns.getColumn(COL.MASTER.UNIT).setPreferredWidth(60);
         columns.getColumn(COL.MASTER.KCAL).setPreferredWidth(80);
-        columns.getColumn(COL.MASTER.SALT).setPreferredWidth(80);
+        columns.getColumn(COL.MASTER.PRTN).setPreferredWidth(80);
         columns.getColumn(COL.MASTER.FATS).setPreferredWidth(80);
+        columns.getColumn(COL.MASTER.SALT).setPreferredWidth(80);
         columns.getColumn(COL.MASTER.LINK).setPreferredWidth(200);
 
         // マウスイベントの登録
