@@ -110,7 +110,7 @@ public class MlRecordTable extends JTable {
         if (column != TABLE.MASS && column != TABLE.KCAL && column != TABLE.SALT && column != TABLE.FATS) {
             return result;
         }
-        // 数量・kcal・タンパク質・塩分・脂質は編集開始時に全選択する
+        // 数量・kcal・たんぱく質・塩分・脂質は編集開始時に全選択する
         if (result) {
             if (e instanceof KeyEvent) {
                 KeyEvent event = (KeyEvent) e;

@@ -49,7 +49,7 @@ public class MlConstant {
             public static final int UNIT = 4;
             /** kcal */
             public static final int KCAL = 5;
-            /** タンパク質 */
+            /** たんぱく質 */
             public static final int PRTN = 6;
             /** 脂質 */
             public static final int FATS = 7;
@@ -101,7 +101,7 @@ public class MlConstant {
             public static final int UNIT = 2;
             /** kcal */
             public static final int KCAL = 3;
-            /** タンパク質 */
+            /** たんぱく質 */
             public static final int PRTN = 4;
             /** 脂質 */
             public static final int FATS = 5;

@@ -52,7 +52,7 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
             "数量",
             "単位",
             "kcal",
-            "タンパク質",
+            "たんぱく質",
             "脂質",
             "塩分",
             "備考",
@@ -159,12 +159,12 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
             currentRecords.add(new Object[] {
                     "",
                     "",
-                    BigDecimal.ZERO,
+                    BigDecimal.ZERO.setScale(2),
                     "",
-                    BigDecimal.ZERO,
-                    BigDecimal.ZERO,
-                    BigDecimal.ZERO,
-                    BigDecimal.ZERO,
+                    BigDecimal.ZERO.setScale(2),
+                    BigDecimal.ZERO.setScale(2),
+                    BigDecimal.ZERO.setScale(2),
+                    BigDecimal.ZERO.setScale(2),
                     ""
             });
         }
@@ -436,7 +436,7 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
             }
         }
 
-        // 数量を入力したら基準量を元にkcalとタンパク質と脂質と塩分を計算
+        // 数量を入力したら基準量を元にkcalとたんぱく質と脂質と塩分を計算
         if (col == TABLE.MASS) {
             String name = getValueAt(row, TABLE.NAME).toString();
             String unit = getValueAt(row, TABLE.UNIT).toString();

@@ -79,7 +79,7 @@ public class MlUtility {
          * BigDecimalのフォーマット
          * 
          * @param value 値
-         * @return #,##0.0
+         * @return #,##0.00
          */
         public static String format(Object value) {
             DecimalFormat df = new DecimalFormat("#,##0.00");

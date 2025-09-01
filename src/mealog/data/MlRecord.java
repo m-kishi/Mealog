@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import mealog.common.MlUtility.UTL;
+import mealog.form.MlFormVersion;
 
 /**
  * 記録情報
@@ -34,7 +35,7 @@ public class MlRecord {
     /** kcal */
     private BigDecimal kcal;
 
-    /** タンパク質 */
+    /** たんぱく質 */
     private BigDecimal prtn;
 
     /** 脂質 */
@@ -80,8 +81,8 @@ public class MlRecord {
         this.mass = UTL.toBigDecimal(mass);
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
-        this.prtn = BigDecimal.ZERO;
-        this.fats = BigDecimal.ZERO;
+        this.prtn = BigDecimal.ZERO.setScale(2);
+        this.fats = BigDecimal.ZERO.setScale(2);
         this.salt = UTL.toBigDecimal(salt);
         this.note = note1 + (UTL.isEmpty(note2) ? "" : " " + note2);
     }
@@ -122,7 +123,7 @@ public class MlRecord {
         this.mass = UTL.toBigDecimal(mass);
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
-        this.prtn = BigDecimal.ZERO;
+        this.prtn = BigDecimal.ZERO.setScale(2);
         this.fats = UTL.toBigDecimal(fats);
         this.salt = UTL.toBigDecimal(salt);
         this.note = note1 + (UTL.isEmpty(note2) ? "" : " " + note2);
@@ -139,7 +140,7 @@ public class MlRecord {
      * @param mass 数量
      * @param unit 単位
      * @param kcal kcal
-     * @param prtn タンパク質
+     * @param prtn たんぱく質
      * @param fats 脂質
      * @param salt 塩分
      * @param note 備考
@@ -178,7 +179,8 @@ public class MlRecord {
      */
     public String toDBFileFormat() {
         return String.format(
-                "\"1.4.0\",\"%s\",\"%s\",\"%s\",\"%s\",\"%.2f\",\"%s\",\"%.2f\",\"%.2f\",\"%.2f\",\"%.2f\",\"%s\"",
+                "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%.2f\",\"%s\",\"%.2f\",\"%.2f\",\"%.2f\",\"%.2f\",\"%s\"",
+                MlFormVersion.VERSION,
                 mark,
                 UTL.toString(date),
                 zone,
@@ -256,9 +258,9 @@ public class MlRecord {
     }
 
     /**
-     * getter(タンパク質)
+     * getter(たんぱく質)
      * 
-     * @return タンパク質
+     * @return たんぱく質
      */
     public BigDecimal getPrtn() {
         return prtn;

@@ -27,7 +27,7 @@ public class MlMaster {
     /** kcal */
     private BigDecimal kcal;
 
-    /** タンパク質 */
+    /** たんぱく質 */
     private BigDecimal prtn;
 
     /** 脂質 */
@@ -54,8 +54,8 @@ public class MlMaster {
         this.base = UTL.toBigDecimal(base);
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
-        this.prtn = BigDecimal.ZERO;
-        this.fats = BigDecimal.ZERO;
+        this.prtn = BigDecimal.ZERO.setScale(2);
+        this.fats = BigDecimal.ZERO.setScale(2);
         this.salt = UTL.toBigDecimal(salt);
         this.link = decideExtention(name);
     }
@@ -76,7 +76,7 @@ public class MlMaster {
         this.base = UTL.toBigDecimal(base);
         this.unit = unit;
         this.kcal = UTL.toBigDecimal(kcal);
-        this.prtn = BigDecimal.ZERO;
+        this.prtn = BigDecimal.ZERO.setScale(2);
         this.fats = UTL.toBigDecimal(fats);
         this.salt = UTL.toBigDecimal(salt);
         this.link = decideExtention(name);
@@ -90,7 +90,7 @@ public class MlMaster {
      * @param base 基準量
      * @param unit 単位
      * @param kcal kcal
-     * @param prtn タンパク質
+     * @param prtn たんぱく質
      * @param fats 脂質
      * @param salt 塩分
      */
@@ -178,9 +178,9 @@ public class MlMaster {
     }
 
     /**
-     * タンパク質
+     * たんぱく質
      * 
-     * @return タンパク質
+     * @return たんぱく質
      */
     public BigDecimal getPrtn() {
         return prtn;

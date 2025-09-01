@@ -27,7 +27,7 @@ public class MlMasterTableModel extends AbstractTableModel {
             "基準量",
             "単位",
             "kcal",
-            "タンパク質",
+            "たんぱく質",
             "脂質",
             "塩分",
             "画像",
@@ -76,12 +76,12 @@ public class MlMasterTableModel extends AbstractTableModel {
         for (int i = 0; i < 10; i++) {
             masters.add(new Object[] {
                     "",
-                    BigDecimal.ZERO,
+                    BigDecimal.ZERO.setScale(2),
                     "",
-                    BigDecimal.ZERO,
-                    BigDecimal.ZERO,
-                    BigDecimal.ZERO,
-                    BigDecimal.ZERO,
+                    BigDecimal.ZERO.setScale(2),
+                    BigDecimal.ZERO.setScale(2),
+                    BigDecimal.ZERO.setScale(2),
+                    BigDecimal.ZERO.setScale(2),
                     ""
             });
         }

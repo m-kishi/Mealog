@@ -61,7 +61,7 @@ public class MlFormRecord extends JFrame implements WindowListener {
     /** 日合計(kcal) */
     private JLabel lblKcalTotal;
 
-    /** 日合計(タンパク質) */
+    /** 日合計(たんぱく質) */
     private JLabel lblPrtnTotal;
 
     /** 日合計(脂質) */
@@ -73,7 +73,7 @@ public class MlFormRecord extends JFrame implements WindowListener {
     /** 月平均(kcal) */
     private JLabel lblKcalAverage;
 
-    /** 月平均(タンパク質) */
+    /** 月平均(たんぱく質) */
     private JLabel lblPrtnAverage;
 
     /** 月平均(脂質) */
@@ -401,11 +401,11 @@ public class MlFormRecord extends JFrame implements WindowListener {
      * 
      * @param infos [
      *              0:日合計(kcal)
-     *              1:日合計(タンパク質)
+     *              1:日合計(たんぱく質)
      *              2:日合計(脂質)
      *              3:日合計(塩分)
      *              4:月平均(kcal)
-     *              5:月平均(タンパク質)
+     *              5:月平均(たんぱく質)
      *              6:月平均(脂質)
      *              7:月平均(塩分)
      *              ]

@@ -116,7 +116,7 @@ public class MlFormResult extends JDialog implements WindowListener {
 
         // タブに追加
         tab.addTab("kcal", scrollPaneKcal);
-        tab.addTab("タンパク質", scrollPanePrtn);
+        tab.addTab("たんぱく質", scrollPanePrtn);
         tab.addTab("脂質", scrollPaneFats);
         tab.addTab("塩分", scrollPaneSalt);
 
