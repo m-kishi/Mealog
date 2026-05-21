@@ -1,4 +1,5 @@
 .DS_Store
 *.db
+target/*
 app/Mealog.app/Contents/Java/Mealog.jar
 app/Mealog.app/Contents/Java/images/*.jpg

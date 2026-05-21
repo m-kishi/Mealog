@@ -28,7 +28,7 @@ public class MlFormVersion extends JDialog {
     public static final String TITLE = "Mealogのバージョン情報";
 
     /** バージョン */
-    public static final String VERSION = "v1.5.0";
+    public static final String VERSION = "v1.6.0";
 
     /** コピーライト */
     public static final String COPYRIGHT = "© 2023 https://github.com/m-kishi";
@@ -58,7 +58,7 @@ public class MlFormVersion extends JDialog {
         ImageIcon icon = null;
         try {
             ClassLoader loader = getClass().getClassLoader();
-            BufferedImage bufferedImage = ImageIO.read(loader.getResourceAsStream("mealog/resource/image/mealog.png"));
+            BufferedImage bufferedImage = ImageIO.read(loader.getResourceAsStream("images/mealog.png"));
             icon = new ImageIcon(bufferedImage.getScaledInstance(52, 52, Image.SCALE_SMOOTH));
         } catch (Exception ex) {
             // 無視

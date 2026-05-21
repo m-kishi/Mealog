@@ -4,23 +4,26 @@
 package mealog.form.table;
 
 import java.awt.Font;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 import java.util.EventObject;
 
+import javax.swing.DropMode;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.TransferHandler;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import mealog.form.table.editor.MlGeneralNumberCellEditor;
 import mealog.form.table.editor.MlGeneralStringCellEditor;
-import mealog.form.table.editor.MlRowMoveButtonCellEditor;
 import mealog.form.table.model.MlRecordTableModel;
 import mealog.form.table.renderer.MlGeneralNumberCellRenderer;
 import mealog.form.table.renderer.MlGeneralStringCellRenderer;
-import mealog.form.table.renderer.MlRowMoveButtonCellRenderer;
 
 /**
  * 記録情報テーブル
@@ -41,8 +44,6 @@ public class MlRecordTable extends JTable {
         public static final int FATS = 6;
         public static final int SALT = 7;
         public static final int NOTE = 8;
-        public static final int MVUP = 9;
-        public static final int MVDW = 10;
     }
 
     /**
@@ -67,8 +68,6 @@ public class MlRecordTable extends JTable {
         TableColumn colFats = columns.getColumn(TABLE.FATS);
         TableColumn colSalt = columns.getColumn(TABLE.SALT);
         TableColumn colNote = columns.getColumn(TABLE.NOTE);
-        TableColumn colMvUp = columns.getColumn(TABLE.MVUP);
-        TableColumn colMvDw = columns.getColumn(TABLE.MVDW);
 
         colZone.setCellRenderer(new MlGeneralStringCellRenderer(JLabel.CENTER));
         colName.setCellRenderer(new MlGeneralStringCellRenderer());
@@ -79,8 +78,6 @@ public class MlRecordTable extends JTable {
         colFats.setCellRenderer(new MlGeneralNumberCellRenderer());
         colSalt.setCellRenderer(new MlGeneralNumberCellRenderer());
         colNote.setCellRenderer(new MlGeneralStringCellRenderer());
-        colMvUp.setCellRenderer(new MlRowMoveButtonCellRenderer("↑"));
-        colMvDw.setCellRenderer(new MlRowMoveButtonCellRenderer("↓"));
 
         colZone.setCellEditor(new MlGeneralStringCellEditor());
         colName.setCellEditor(new MlGeneralStringCellEditor());
@@ -91,8 +88,6 @@ public class MlRecordTable extends JTable {
         colFats.setCellEditor(new MlGeneralNumberCellEditor());
         colSalt.setCellEditor(new MlGeneralNumberCellEditor());
         colNote.setCellEditor(new MlGeneralStringCellEditor());
-        colMvUp.setCellEditor(new MlRowMoveButtonCellEditor(model, true));
-        colMvDw.setCellEditor(new MlRowMoveButtonCellEditor(model, false));
 
         // 列幅設定
         columns.getColumn(TABLE.ZONE).setPreferredWidth(60);
@@ -103,9 +98,7 @@ public class MlRecordTable extends JTable {
         columns.getColumn(TABLE.PRTN).setPreferredWidth(80);
         columns.getColumn(TABLE.FATS).setPreferredWidth(80);
         columns.getColumn(TABLE.SALT).setPreferredWidth(80);
-        columns.getColumn(TABLE.NOTE).setPreferredWidth(132);
-        columns.getColumn(TABLE.MVUP).setPreferredWidth(44);
-        columns.getColumn(TABLE.MVDW).setPreferredWidth(44);
+        columns.getColumn(TABLE.NOTE).setPreferredWidth(220);
 
         // セル選択の設定
         setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -114,6 +107,11 @@ public class MlRecordTable extends JTable {
 
         // キー入力したらフォーカスをセルに設定する
         setSurrendersFocusOnKeystroke(true);
+
+        // ドラッグ＆ドロップによる行移動
+        setDragEnabled(true);
+        setDropMode(DropMode.INSERT_ROWS);
+        setTransferHandler(new TableRowTransferHandler(this));
     }
 
     @Override
@@ -136,5 +134,58 @@ public class MlRecordTable extends JTable {
             }
         }
         return result;
+    }
+
+    /**
+     * ドラッグ＆ドロップ
+     */
+    private static class TableRowTransferHandler extends TransferHandler {
+
+        /** テーブル */
+        private final JTable table;
+
+        /** ドラッグ中の行 */
+        private int draggedRow = -1;
+
+        /**
+         * コンストラクタ
+         * 
+         * @param table テーブル
+         */
+        public TableRowTransferHandler(JTable table) {
+            this.table = table;
+        }
+
+        @Override
+        protected Transferable createTransferable(JComponent c) {
+            draggedRow = table.getSelectedRow();
+            return new StringSelection(String.valueOf(draggedRow));
+        }
+
+        @Override
+        public int getSourceActions(JComponent c) {
+            return MOVE;
+        }
+
+        @Override
+        public boolean canImport(TransferSupport support) {
+            return support.isDrop();
+        }
+
+        @Override
+        public boolean importData(TransferSupport support) {
+            if (!canImport(support)) {
+                return false;
+            }
+            var dl = (JTable.DropLocation) support.getDropLocation();
+            int row = dl.getRow();
+            MlRecordTableModel model = (MlRecordTableModel) table.getModel();
+            if (draggedRow < 0 || draggedRow == row) {
+                return false;
+            }
+            model.moveRow(draggedRow, row);
+            table.setRowSelectionInterval(row, row);
+            return true;
+        }
     }
 }

@@ -57,7 +57,7 @@ public class MlSubformImage extends JDialog {
             try {
                 // エラー画像を読み込み
                 ClassLoader loader = getClass().getClassLoader();
-                BufferedImage bufferedImage = ImageIO.read(loader.getResource("mealog/resource/image/error.png"));
+                BufferedImage bufferedImage = ImageIO.read(loader.getResource("images/error.png"));
                 image = bufferedImage.getScaledInstance(378, 378, Image.SCALE_SMOOTH);
             } catch (Exception ex) {
                 // 無視

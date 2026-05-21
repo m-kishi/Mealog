@@ -56,8 +56,6 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
             "脂質",
             "塩分",
             "備考",
-            "",
-            "",
     };
 
     /**
@@ -270,6 +268,21 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
     }
 
     /**
+     * 行移動
+     * 
+     * @param from 元
+     * @param to   先
+     */
+    public void moveRow(int from, int to) {
+        var record = currentRecords.remove(from);
+        if (from < to) {
+            to--;
+        }
+        currentRecords.add(to, record);
+        fireTableDataChanged();
+    }
+
+    /**
      * 現在の日付の記録情報を内部データへ退避
      */
     private void storeCurrentRecords() {
@@ -385,43 +398,6 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
         frame.updateInfo(infos);
     }
 
-    /**
-     * 明細行の入れ替え(上)
-     * 
-     * @param row 対象行インデックス
-     */
-    public void moveUp(int row) {
-        if (row <= 0) {
-            return;
-        }
-        swap(row, row - 1);
-    }
-
-    /**
-     * 明細行の入れ替え(下)
-     * 
-     * @param row 対象行インデックス
-     */
-    public void moveDown(int row) {
-        if (row >= currentRecords.size() - 1) {
-            return;
-        }
-        swap(row, row + 1);
-    }
-
-    /**
-     * 明細行の入れ替え
-     * 
-     * @param r1 対象行インデックス
-     * @param r2 対象行インデックス
-     */
-    private void swap(int r1, int r2) {
-        Object[] tmp = currentRecords.get(r1);
-        currentRecords.set(r1, currentRecords.get(r2));
-        currentRecords.set(r2, tmp);
-        fireTableRowsUpdated(Math.min(r1, r2), Math.max(r1, r2));
-    }
-
     @Override
     public int getRowCount() {
         return currentRecords.size();
@@ -434,17 +410,11 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if (columnIndex == TABLE.MVUP || columnIndex == TABLE.MVDW) {
-            return null;
-        }
         return currentRecords.get(rowIndex)[columnIndex];
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if (columnIndex == TABLE.MVUP || columnIndex == TABLE.MVDW) {
-            return Object.class;
-        }
         return currentRecords.get(0)[columnIndex].getClass();
     }
 
@@ -460,9 +430,6 @@ public class MlRecordTableModel extends AbstractTableModel implements TableModel
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        if (columnIndex == TABLE.MVUP || columnIndex == TABLE.MVDW) {
-            return;
-        }
         currentRecords.get(rowIndex)[columnIndex] = value;
         fireTableCellUpdated(rowIndex, columnIndex);
     }
