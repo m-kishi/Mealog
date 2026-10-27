@@ -130,14 +130,14 @@ public class MlMaster {
      */
     public String toMasterFileFormat() {
         return String.format(
-                "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"",
+                "\"%s\",\"%.2f\",\"%s\",\"%.2f\",\"%.2f\",\"%.2f\",\"%.2f\"",
                 name,
-                UTL.format(base),
+                base,
                 unit,
-                UTL.format(kcal),
-                UTL.format(prtn),
-                UTL.format(fats),
-                UTL.format(salt)
+                kcal,
+                prtn,
+                fats,
+                salt
         );
     }
 

@@ -62,7 +62,7 @@ public class MlMasterTable extends JTable {
         colBase.setCellRenderer(rendererBase);
         colUnit.setCellRenderer(rendererUnit);
         colKcal.setCellRenderer(rendererKcal);
-        colFats.setCellRenderer(rendererPrtn);
+        colPrtn.setCellRenderer(rendererPrtn);
         colFats.setCellRenderer(rendererFats);
         colSalt.setCellRenderer(rendererSalt);
         colLink.setCellRenderer(rendererLink);

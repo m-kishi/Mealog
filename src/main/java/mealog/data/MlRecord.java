@@ -191,7 +191,8 @@ public class MlRecord {
                 prtn,
                 fats,
                 salt,
-                note);
+                note
+        );
     }
 
     /**
